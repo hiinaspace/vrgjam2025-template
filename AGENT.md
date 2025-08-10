@@ -1,100 +1,67 @@
-# VRG Game Jam 2025 Submission Helper - Agent Context
+# VRG Game Jam 2025 Submission Helper - Maintenance Guide
 
 ## Project Overview
-This Unity package provides an editor tool for submitting games to the VRChat Game Jam 2025. It's similar to VRChat's Build & Publish window but focused on packaging and validating game submissions.
+This Unity package provides an editor tool for VRChat Game Jam 2025 submissions. The tool validates game packages and exports them as ZIP files for submission. It operates entirely within the Unity Editor and integrates with Unity's Package Manager.
 
-## Target Unity Version
-- Unity 2022.3+ only
-- VRChat Worlds SDK 3.8.x dependency
+## Current Implementation Status
+The submission helper is fully functional with package detection, validation, and ZIP export. All core features are complete and working.
 
-## Core Requirements
+## Architecture Overview
 
-### Package Detection
-- Detect jam submission packages by looking for `prefabEntryPoint` field in package.json
-- If multiple packages found, show dropdown selection
-- Primary target: `party.vrg.jam.test-submission` package as example
+### Core Components
+- **SubmissionHelperWindow**: Main editor window accessible via `/vrg/ Game Jam 2025 -> Submission Helper`
+- **PackageDetector**: Handles package discovery via PackageManager.Client and validation logic
+- **ValidationResult**: Data structure for validation feedback with success/warning states
 
-### Editor Window Specifications
-- Standard Unity EditorWindow
-- Menu path: `/vrg/ Game Jam 2025 -> Submission Helper`
-- Similar style to VRChat SDK build window but doesn't need to be exact
+### Package Detection Criteria
+Packages are identified by having a `prefabEntryPoint` field in their package.json manifest. The system uses Unity's PackageManager.Client API for reliable package enumeration.
 
-### Validation Features (All Advisory - Warnings Only)
-1. **Package Size Check**: Unzipped directory <50MB
-2. **Prefab Boundary Check**: Walk prefab hierarchy, check colliders/mesh renderers, calculate AABB for 20m³ limit
-3. **External Reference Detection**: Flag any references to GUIDs in Assets/ folder (outside package)
-4. **Package Manifest Verification**: Ensure required fields present
+### Validation System
+Four validation categories run independently and always return results:
+1. **Size**: Directory size check against 50MB limit
+2. **Bounds**: Prefab AABB check for 20m maximum in any dimension
+3. **References**: Detection of external Assets/ dependencies
+4. **Manifest**: Required package.json field verification
 
-### Terms of Service
-- Simple text box with basic intent: permission to use prefab in jam world, creator retains ownership
-- Single checkbox to agree
-- Placeholder legal text (real legal text will be on website)
+## Maintenance Considerations
 
-### ZIP Export
-- Save package directory as ZIP file
-- Suggested naming: `[package-name]-v[version]-[timestamp].zip`
-- Use C#/Unity standard library for ZIP creation (no external dependencies)
-- File save dialog for user to choose location
+### Adding New Validation Rules
+New validation categories should:
+- Always return at least one ValidationResult (success or warning)
+- Add results to the main list in ValidatePackage()
+- Use appropriate ValidationCategory enum value
+- Provide clear, actionable error messages
 
-### UI State Management
-- Show work-in-progress indicator for server upload (placeholder for future)
-- Display validation results clearly
-- Handle missing/invalid packages gracefully
+### Bounds Validation Details
+The bounds check instantiates prefabs in temporary scenes to get accurate measurements. This is necessary because prefab assets don't have valid bounds until instantiated.
 
-## Current Repository Structure
+### External Dependencies
+The system avoids external dependencies beyond VRChat Worlds SDK. ZIP functionality uses System.IO.Compression.ZipFile available in Unity 2022.3+.
 
-```
-Packages/
-├── party.vrg.jam.submission-helper/
-│   ├── package.json (name: "party.vrg.jam.submission-helper")
-│   └── Editor/
-│       ├── ExampleEditorScript.cs (placeholder to replace)
-│       └── VRChatPackageTemplate.Editor.asmdef
-└── party.vrg.jam.test-submission/
-    ├── package.json (has "prefabEntryPoint": "Runtime/TestPrefab.prefab")
-    ├── Runtime/TestPrefab.prefab
-    └── Samples/TestScene.unity
-```
+### Error Handling Philosophy
+All validation is advisory-only. The tool should help developers identify potential issues without blocking submissions, since validation robustness cannot be guaranteed.
 
-## Implementation Notes
+## Future Enhancements
 
-### Package Discovery
-- Scan Packages/ directory for package.json files
-- Parse JSON to check for `prefabEntryPoint` field
-- Use Unity's package management APIs if available
+### Server Integration
+The UI includes a disabled "Submit to Server" button for future server upload functionality. This would require:
+- HTTP client implementation for multipart file uploads
+- Authentication/authorization system
+- Progress tracking and retry logic
 
-### Validation Implementation
-- **Size Check**: Directory.GetFiles() recursive with file sizes
-- **Boundary Check**: Load prefab, traverse hierarchy, get Collider/MeshRenderer bounds
-- **External References**: AssetDatabase.GetDependencies() and check paths
-- **Manifest Check**: Parse package.json for required fields
+### Validation Improvements
+Consider adding checks for:
+- Asset optimization recommendations
+- Performance impact warnings
+- VRChat-specific compatibility issues
 
-### ZIP Creation
-- Use System.IO.Compression.ZipFile (available in Unity 2022.3)
-- Include entire package directory
-- Exclude .meta files and other Unity-generated content
+## Technical Notes
 
-### Error Handling
-- Graceful fallbacks for missing packages
-- Clear error messages for validation failures
-- Logging for debugging package detection issues
+### Unity Version Compatibility
+Designed for Unity 2022.3+ with VRChat Worlds SDK 3.8.x. The PackageManager.Client API and System.IO.Compression requirements limit backward compatibility.
 
-## Design Philosophy
-- Start simple and advisory-only
-- Focus on helping developers rather than blocking them
-- Clear, friendly UI similar to existing VRChat tools
-- Extensible for future server upload functionality
+### Namespace and Assembly
+Uses `Party.Vrg.Jam` namespace with `Party.Vrg.Jam.SubmissionHelper.Editor` assembly definition. This prevents conflicts with other VRChat packages.
 
-## Next Steps Priority
-1. Replace ExampleEditorScript.cs with submission helper window
-2. Implement package detection and dropdown selection
-3. Add validation checks (advisory warnings)
-4. Create terms of service UI
-5. Implement ZIP export functionality
-6. Add placeholder for future server upload
-
-## Technical Constraints
-- No external dependencies beyond VRChat Worlds SDK
-- Must work entirely in Unity Editor (no runtime components)
-- Compatible with VPM package structure
-- Follow Unity Editor UI conventions
+### Debug Logging
+Validation includes comprehensive debug logging to help troubleshoot issues. This can be disabled in production if needed.
