@@ -1,5 +1,5 @@
 {
-    "name": "VRChatPackageTemplate.Editor",
+    "name": "Party.Vrg.Jam.SubmissionHelper.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

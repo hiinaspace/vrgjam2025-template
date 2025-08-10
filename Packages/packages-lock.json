@@ -231,6 +231,24 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "party.vrg.jam.test-bad-submission": {
+      "version": "file:party.vrg.jam.test-bad-submission",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "party.vrg.jam.test-submission": {
+      "version": "file:party.vrg.jam.test-submission",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "party.vrg.jam.test-submission-2": {
+      "version": "file:party.vrg.jam.test-submission-2",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
