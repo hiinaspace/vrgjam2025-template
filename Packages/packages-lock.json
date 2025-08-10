@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.example.jamgame": {
+      "version": "file:com.example.jamgame",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.ai.navigation": {
       "version": "1.1.5",
       "depth": 0,
@@ -231,20 +237,8 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "party.vrg.jam.test-bad-submission": {
-      "version": "file:party.vrg.jam.test-bad-submission",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "party.vrg.jam.test-submission": {
-      "version": "file:party.vrg.jam.test-submission",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "party.vrg.jam.test-submission-2": {
-      "version": "file:party.vrg.jam.test-submission-2",
+    "space.hiina.mugi": {
+      "version": "file:space.hiina.mugi",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

@@ -1,4 +1,5 @@
 /*/
 !com.vrchat.core.bootstrap
+!com.vrchat.core.*/
 
-!party.vrg.jam.*
+!com.example.jamgame

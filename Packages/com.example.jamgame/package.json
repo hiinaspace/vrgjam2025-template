@@ -1,0 +1,18 @@
+{
+    "name": "com.example.jamgame",
+    "displayName": "!/vrg/ Template Package",
+    "version": "0.1.0",
+    "unity": "2022.3",
+    "description": "Template for creating a VRChat prefab game for the /vrg/ game jam 2025.",
+    "vrchatVersion": "2022.1.1",
+    "author": {
+        "name": "(You)",
+        "email": "example@example.com"
+    },
+    "url": "",
+    "vpmDependencies": {
+        "com.vrchat.worlds": "3.8.2",
+        "space.hiina.mugi": "0.2.0"
+    },
+    "prefabEntryPoint": "Runtime/JamGame.prefab"
+}
