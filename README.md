@@ -10,14 +10,16 @@ In this tutorial, you'll make a simple game where all players click a capsule to
 
 ### Prerequisites
 
-This tutorial assumes you are familiar with Unity 2022.3, VRChat World SDK, VCC (VRChat Creator Companion), and basic UdonSharp scripting.
+This tutorial assumes you have [VCC (VRChat Creator Companion)](https://vcc.docs.vrchat.com/) and Unity setup already, and basic familiarity with both. If you don't, do VRChat's own [Creating Your First World](https://creators.vrchat.com/worlds/creating-your-first-world) tutorial first.
 
 ### Step 1. Setup
 
 #### Download Template
-Download this template as a ZIP from GitHub and extract it to your projects directory.
+
+[Download this template as a ZIP](https://github.com/hiinaspace/vrgjam2025-template/archive/refs/heads/main.zip) from GitHub and extract it somewhere on your computer.
 
 #### Add VPM Repository
+
 Before opening in VCC, you need to add the VRG Game Jam package repository:
 
 1. Open your web browser and go to https://hiinaspace.github.io/vrgjam2025-vpm-repo/
@@ -25,11 +27,14 @@ Before opening in VCC, you need to add the VRG Game Jam package repository:
 3. This adds the MUGI framework and submission helper packages to your VCC
 
 #### Open Project
+
 1. Open VCC (VRChat Creator Companion)
 2. Add the extracted template folder as a project
-3. Open the project in Unity
+3. Open the project in Unity.
+4. Wait warmly for the Domain to Complete
 
 ### Step 2: Rename Your Package
+
 1. In the Unity Project window, navigate to `Packages/com.example.jamgame`
 2. Right-click the folder and rename it to `com.example.awesomegame`
 3. Open the `package.json` file inside this folder
@@ -46,16 +51,19 @@ Before opening in VCC, you need to add the VRG Game Jam package repository:
    }
    ```
 
+In a real game you'll use real, unique info, but this is fine for the tutorial.
+
 ### Step 3: Open the Template Prefab
+
 1. In the Project window, navigate to `Packages/com.example.awesomegame/Runtime`
 2. Double-click `TemplateGame.prefab` to open it in prefab editing mode
 3. This prefab contains the MugiGame framework components at the root
 
 ### Step 4: Add a Capsule
+
 1. In the prefab hierarchy, right-click and create `3D Object > Capsule`
 2. Name it "ScoreButton"
 3. Position it at the center of the scene (0, 0, 0)
-4. Scale it appropriately for VR interaction
 
 ### Step 5: Create the CapsuleClicker Script
 1. In the Project window, navigate to `Packages/com.example.awesomegame/Runtime`
