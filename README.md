@@ -1,31 +1,140 @@
-# VRG Game Jam 2025 Submission Helper
+# VRG Game Jam 2025 Template
 
-A Unity Editor tool for packaging and validating VRChat game jam submissions. This tool helps developers prepare their games for the [/vrg/ Game Jam 2025](https://jam.vrg.party) by providing validation checks and automated ZIP export functionality.
+This template provides everything needed to create a multiplayer VR minigame for the [/vrg/ Game Jam 2025](https://jam.vrg.party). The template includes the MUGI framework for multiplayer game logic and a submission helper tool for packaging your game.
 
-## Overview
+For complete documentation, troubleshooting, and jam details, visit [jam.vrg.party](https://jam.vrg.party).
 
-The submission helper integrates with Unity's Package Manager to detect game packages and validate them against jam requirements. It provides a comprehensive validation system that checks package size, prefab dimensions, external dependencies, and manifest completeness.
+## Tutorial
 
-## Features
+In this tutorial, you'll make a simple game where all players click a capsule to make their score go up. The game will be fully usable as a prefab in any VRChat world, including as a demo world you can upload to your own VRChat account.
 
-- Automatic detection of game packages via `prefabEntryPoint` field
-- Comprehensive validation with clear success/warning feedback  
-- One-click ZIP export with proper file handling and naming
-- Integration with Unity's editor UI and package management system
-- (TODO) automated submission of prefabs for the jam.
+### Prerequisites
 
-## Requirements
+This tutorial assumes you are familiar with Unity 2022.3, VRChat World SDK, VCC (VRChat Creator Companion), and basic UdonSharp scripting.
 
-This tool requires Unity 2022.3 or later with VRChat Worlds SDK 3.8.x installed. Game packages must follow VPM package structure and include a `prefabEntryPoint` field in their package.json manifest.
+### Step 1. Setup
 
-## Usage
+#### Download Template
+Download this template as a ZIP from GitHub and extract it to your projects directory.
 
-Access the submission helper through `/vrg/ Game Jam 2025 -> Submission Helper` in Unity's menu bar. Select your game package from the dropdown, run validation to check for potential issues, accept the submission agreement, and export as ZIP for submission.
+#### Add VPM Repository
+Before opening in VCC, you need to add the VRG Game Jam package repository:
 
-The validation system checks four key areas: package size limits, prefab spatial boundaries, external asset references, and required manifest fields. All validation is advisory to help identify potential issues without blocking submissions.
+1. Open your web browser and go to https://hiinaspace.github.io/vrgjam2025-vpm-repo/
+2. Click the "Add to VCC" button
+3. This adds the MUGI framework and submission helper packages to your VCC
 
-## Validation Details
+#### Open Project
+1. Open VCC (VRChat Creator Companion)
+2. Add the extracted template folder as a project
+3. Open the project in Unity
 
-Package size is limited to 50MB total. Prefabs cannot exceed 20 meters in any single dimension. External references to the Assets folder should be avoided to ensure package portability. Required manifest fields include package name, version, and prefab entry point.
+### Step 2: Rename Your Package
+1. In the Unity Project window, navigate to `Packages/com.example.jamgame`
+2. Right-click the folder and rename it to `com.example.awesomegame`
+3. Open the `package.json` file inside this folder
+4. Update the package metadata:
+   ```json
+   {
+       "name": "com.example.awesomegame",
+       "displayName": "Awesome VR Game",
+       "description": "A thrilling capsule-clicking experience",
+       "author": {
+           "name": "Your Name",
+           "email": "your.email@example.com"
+       }
+   }
+   ```
 
-For questions or technical support, visit [jam.vrg.party](https://jam.vrg.party) or refer to the jam documentation for detailed submission guidelines and requirements.
+### Step 3: Open the Template Prefab
+1. In the Project window, navigate to `Packages/com.example.awesomegame/Runtime`
+2. Double-click `TemplateGame.prefab` to open it in prefab editing mode
+3. This prefab contains the MugiGame framework components at the root
+
+### Step 4: Add a Capsule
+1. In the prefab hierarchy, right-click and create `3D Object > Capsule`
+2. Name it "ScoreButton"
+3. Position it at the center of the scene (0, 0, 0)
+4. Scale it appropriately for VR interaction
+
+### Step 5: Create the CapsuleClicker Script
+1. In the Project window, navigate to `Packages/com.example.awesomegame/Runtime`
+2. Right-click and create `Create > U# Script`
+3. Name it `CapsuleClicker`
+4. Open the script and replace its contents with:
+
+```csharp
+using Space.Hiina.Mugi;
+using UdonSharp;
+using UnityEngine;
+using VRC.SDKBase;
+
+namespace Com.Example.AwesomeGame
+{
+    public class CapsuleClicker : UdonSharpBehaviour
+    {
+        public MugiGame mugiGame;
+
+        public override void Interact()
+        {
+            VRCPlayerApi localPlayer = Networking.LocalPlayer;
+            if (mugiGame != null && localPlayer != null)
+            {
+                if (mugiGame.gameState == MugiGame.STATE_RUNNING && 
+                    mugiGame.IsPlayerInGame(localPlayer))
+                {
+                    mugiGame.IncrementScore(localPlayer.playerId, 1);
+                }
+            }
+        }
+    }
+}
+```
+
+### Step 6: Attach the Script
+
+1. Select the "ScoreButton" capsule in the prefab hierarchy
+2. Click "Add Component" and add your `CapsuleClicker` script
+3. In the script component, drag the root `TemplateGame` object into the "Mugi Game" field
+
+### Step 7: Configure Game Settings
+
+1. Select the root `TemplateGame` object in the prefab hierarchy
+2. In the `MugiGame` component, configure:
+   - **Game Time Limit**: 30 (seconds)
+   - **Min Players**: 1
+   - **Max Players**: 8
+   - **Use Teams**: false (unchecked)
+
+### Step 8: Test Your Game in Play Mode
+
+1. Navigate to `Packages/com.example.awesomegame/Samples`
+2. Open the `GameTestWorld.unity` scene
+3. Enter Play Mode in Unity
+4. Your capsule should be visible in the scene
+5. Join the game using the lobby UI.
+6. Start the game using the lobby UI.
+7. Click the capsule to increment your score
+8. Once the game ends, see your final score on the scoreboard.
+
+### Step 9: Upload and Test in VRChat
+
+1. Open the VRChat SDK window from VRChat SDK -> Show Control Panel.
+2. Name the world "Awesome game test"
+3. Click "Capture in Scene" to make a thumbnail image.
+4. Click the "Build & Publish" button.
+5. Test the world with your friends (or alt accounts)
+
+### Step 10: Submit Your Game
+
+1. Open the VRG Game Jam Submission Helper: `Menu > /vrg Game Jam 2025 > Submission Helper`
+2. Your package should appear automatically in the dropdown
+3. Click "Refresh Validation" to check for issues
+4. Accept the submission agreement
+5. Click "Export as ZIP" to create your submission file.
+
+You now have a working game, a demo world, and a file other people can use to add your game to their world!
+
+## Support
+
+Visit [jam.vrg.party](https://jam.vrg.party) for complete documentation, troubleshooting guides, and community support.
