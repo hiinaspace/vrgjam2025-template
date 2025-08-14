@@ -30,8 +30,10 @@ Before opening in VCC, you need to add the VRG Game Jam package repository:
 
 1. Open VCC (VRChat Creator Companion)
 2. Add the extracted template folder as a project
-3. Open the project in Unity.
-4. Wait warmly for the Domain to Complete
+3. In VCC, click the 'Manage Project' Button.
+4. Observe that the `Mugi (Mini Udon Game Interface)` and `/vrg/ Game Jam 2025 Submission Helper` are in the list under `Manage Packages`. (You might get a prompt to download these if they're not there.)
+5. Open the project in Unity using the button in VCC.
+6. Wait warmly for the Domain to Complete
 
 Note: if you look in the Console of Unity and see a bunch of errors, don't despair. The errors are usually spurious. Press the "Clear" button in the upper-left of the console to hopefully make 'em go away.
 
@@ -160,6 +162,7 @@ namespace Com.Example.AwesomeGame
     public class CapsuleClicker : UdonSharpBehaviour
     {
         public MugiGame mugiGame;
+
         void Start()
         {
             
