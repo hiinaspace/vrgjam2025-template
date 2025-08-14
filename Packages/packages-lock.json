@@ -231,6 +231,12 @@
         "com.unity.ai.navigation": "1.1.5"
       }
     },
+    "party.vrg.jam.submission-helper": {
+      "version": "file:party.vrg.jam.submission-helper",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "space.hiina.mugi": {
       "version": "file:space.hiina.mugi",
       "depth": 0,
