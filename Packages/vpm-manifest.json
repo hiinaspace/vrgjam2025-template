@@ -3,11 +3,11 @@
     "com.vrchat.worlds": {
       "version": "3.8.2"
     },
-    "party.vrg.jam.submission-helper": {
-      "version": "0.2.0"
-    },
     "space.hiina.mugi": {
       "version": "0.3.0"
+    },
+    "party.vrg.jam.submission-helper": {
+      "version": "0.2.0"
     }
   },
   "locked": {
@@ -21,14 +21,14 @@
       "version": "3.8.2",
       "dependencies": {}
     },
-    "party.vrg.jam.submission-helper": {
-      "version": "0.2.0",
+    "space.hiina.mugi": {
+      "version": "0.3.0",
       "dependencies": {
         "com.vrchat.worlds": "3.8.x"
       }
     },
-    "space.hiina.mugi": {
-      "version": "0.3.0",
+    "party.vrg.jam.submission-helper": {
+      "version": "0.2.0",
       "dependencies": {
         "com.vrchat.worlds": "3.8.x"
       }
