@@ -7,7 +7,7 @@
       "version": "0.3.0"
     },
     "space.hiina.mugi": {
-      "version": "0.6.0"
+      "version": "0.7.0"
     }
   },
   "locked": {
@@ -28,7 +28,7 @@
       }
     },
     "space.hiina.mugi": {
-      "version": "0.6.0",
+      "version": "0.7.0",
       "dependencies": {
         "com.vrchat.worlds": "3.8.x"
       }
